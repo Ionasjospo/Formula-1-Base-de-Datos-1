@@ -16,7 +16,7 @@ def insertDataFrom_csv(csv_file):
         # Leer el archivo CSV y obtener los datos
         with open(csv_file, 'r') as file:
             csv_data = csv.reader(file)
-            #next(csv_data)  # Omitir la primera fila si contiene encabezados
+            next(csv_data)  # Omitir la primera fila si contiene encabezados
 
             # Iterar sobre las filas del archivo CSV e insertar los datos en la tabla
             for row in csv_data:
@@ -24,17 +24,16 @@ def insertDataFrom_csv(csv_file):
                 if all(value is not None for value in row):
                     # row contiene los valores de cada fila en el archivo CSV
                     # Ejemplo de consulta INSERT:
-                    insert_query = "INSERT INTO estudiante(cedula, nombre, apellido) VALUES (%s, %s, %s)"
+                    insert_query = "INSERT INTO results(resultId,raceId,driverId,constructorId,number,grid,position,positionText,positionOrder,points,laps,time,milliseconds,fastestLap,rank,fastestLapTime,fastestLapSpeed,statusId) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
                     rowStr = str(row) #Parseamos la row
                     rowStr = rowStr.strip("[]' ") #Sacamos los "[]' "
                     attributes = rowStr.split(";") #Split ";"
 
-                    values = (attributes[0], attributes[1], attributes[2])  # Aquí asume que los valores están en la columna 1 y columna 2
+                    values = (attributes[0], attributes[1], attributes[2], attributes[3], attributes[4], attributes[5],
+                              attributes[6], attributes[7], attributes[8], attributes[9], attributes[10], attributes[11], attributes[12], attributes[13], attributes[14],
+                              attributes[15], attributes[16], attributes[17])  # Aquí asume que los valores están en la columna 1 y columna 2
                     cursor.execute(insert_query, values)
-
-        connection.ping(reconnect=True)  # Comprueba la conexión
-        print("Conexión exitosa a la base de datos")
 
         # Confirma los cambios en la base de datos
         connection.commit()
