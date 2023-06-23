@@ -7,7 +7,7 @@ def insertDataFrom_csv(csv_file):
         host='localhost',
         user='root',
         password='bernardo',
-        database='formula1'
+        database='F1_Project'
     )
     try:
         # Crea un cursor para ejecutar consultas SQL
@@ -16,7 +16,7 @@ def insertDataFrom_csv(csv_file):
         # Leer el archivo CSV y obtener los datos
         with open(csv_file, 'r') as file:
             csv_data = csv.reader(file)
-            #next(csv_data)  # Omitir la primera fila si contiene encabezados
+            next(csv_data)  # Omitir la primera fila si contiene encabezados
 
             # Iterar sobre las filas del archivo CSV e insertar los datos en la tabla
             for row in csv_data:
@@ -26,11 +26,12 @@ def insertDataFrom_csv(csv_file):
                     # Ejemplo de consulta INSERT:
                     insert_query = "INSERT INTO status(statusId,status) VALUES (%s, %s)"
 
-                    rowStr = str(row) #Parseamos la row
-                    rowStr = rowStr.strip("[]' ") #Sacamos los "[]' "
-                    attributes = rowStr.split(";") #Split ";"
+                    rowStr = str(row)  # Parseamos la row
+                    rowStr = rowStr.strip("[]")  # Sacamos los "[] "
+                    rowStr = rowStr.replace("'", "")
+                    attributes = rowStr.split(",")  # Split ";"
 
-                    values = (attributes[0], attributes[1])  # Aquí asume que los valores están en la columna 1 y columna 2
+                    values = (int(attributes[0]), attributes[1])  # Aquí asume que los valores están en la columna 1 y columna 2
                     cursor.execute(insert_query, values)
 
         # Confirma los cambios en la base de datos

@@ -7,7 +7,7 @@ def insertDataFrom_csv(csv_file):
         host='localhost',
         user='root',
         password='bernardo',
-        database='formula1'
+        database='F1_Project'
     )
     try:
         # Crea un cursor para ejecutar consultas SQL
@@ -24,14 +24,15 @@ def insertDataFrom_csv(csv_file):
                 if all(value is not None for value in row):
                     # row contiene los valores de cada fila en el archivo CSV
                     # Ejemplo de consulta INSERT:
-                    insert_query = "INSERT INTO circuits(circuitId, circuitRef, name,location,country,lat,lng,alt,url) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                    insert_query = "INSERT INTO circuits(circuitId,circuitRef,name,location,country,lat,lng,alt,url) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
-                    rowStr = str(row) #Parseamos la row
-                    rowStr = rowStr.strip("[]' ") #Sacamos los "[]' "
-                    attributes = rowStr.split(";") #Split ";"
-
+                    rowStr = str(row)  # Parseamos la row
+                    rowStr = rowStr.strip("[]")  # Sacamos los "[] "
+                    rowStr = rowStr.replace("'", "")
+                    attributes = rowStr.split(",")  # Split ";"
                     values = (attributes[0], attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], attributes[6], attributes[7], attributes[8])  # Aquí asume que los valores están en la columna 1 y columna 2
                     cursor.execute(insert_query, values)
+                    connection.commit()
 
     except Exception as e:
         # Maneja cualquier error que ocurra durante la ejecución de consultas

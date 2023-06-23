@@ -7,7 +7,7 @@ def insertDataFrom_csv(csv_file):
         host='localhost',
         user='root',
         password='bernardo',
-        database='formula1'
+        database='F1_Project'
     )
     try:
         # Crea un cursor para ejecutar consultas SQL
@@ -27,11 +27,12 @@ def insertDataFrom_csv(csv_file):
                     insert_query = "INSERT INTO drivers(driverId,driverRef,number,code," \
                                    "forename,surname,dob,nationality,url) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
-                    rowStr = str(row) #Parseamos la row
-                    rowStr = rowStr.strip("[]' ") #Sacamos los "[]' "
-                    attributes = rowStr.split(";") #Split ";"
+                    rowStr = str(row)  # Parseamos la row
+                    rowStr = rowStr.strip("[]")  # Sacamos los "[] "
+                    rowStr = rowStr.replace("'", "")
+                    attributes = rowStr.split(",")  # Split ";"
 
-                    values = (attributes[0], attributes[1], attributes[2], attributes[3], attributes[4], attributes[5],
+                    values = (int(attributes[0]), attributes[1], int(attributes[2]), attributes[3], attributes[4], attributes[5],
                               attributes[6], attributes[7], attributes[8])  # Aquí asume que los valores están en la columna 1 y columna 2
                     cursor.execute(insert_query, values)
 
