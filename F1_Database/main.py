@@ -8,7 +8,7 @@ from F1_Database.FilesHandlers import circuits, constructor_results, constructor
 #circuits.insertDataFrom_csv('../archive/circuits.csv') completed
 #constructors.insertDataFrom_csv('../archive/constructors.csv') completed
 #status.insertDataFrom_csv('../archive/status.csv') completed
-#drivers.insertDataFrom_csv('../archive/drivers.csv')
+#drivers.insertDataFrom_csv('../archive/drivers.csv') completed
 #constructor_results.insertDataFrom_csv('archive/constructor_results.csv')
 #constructor_standings.insertDataFrom_csv('archive/constructor_standings.csv')
 #driver_standings.insertDataFrom_csv('archive/driver_standings.csv')

@@ -21,18 +21,14 @@ def insertDataFrom_csv(csv_file):
             # Iterar sobre las filas del archivo CSV e insertar los datos en la tabla
             for row in csv_data:
                 # Verificar si la fila no es nula
-                if all(value is not None for value in row):
-                    # row contiene los valores de cada fila en el archivo CSV
-                    # Ejemplo de consulta INSERT:
-                    insert_query = "INSERT INTO constructor_results(constructorResultsId,raceId,constructorId,points,status) VALUES (%s, %s, %s, %s, %s)"
+                row = [None if value == "\\N" else value for value in row]
+                # row contiene los valores de cada fila en el archivo CSV
+                # Ejemplo de consulta INSERT:
+                insert_query = "INSERT INTO constructor_results(constructorResultsId,raceId," \
+                                   "constructorId,points,status) VALUES (%s, %s, %s, %s, %s)"
 
-                    rowStr = str(row)  # Parseamos la row
-                    rowStr = rowStr.strip("[]")  # Sacamos los "[] "
-                    rowStr = rowStr.replace("'", "")
-                    attributes = rowStr.split(",")  # Split ";"
-
-                    values = (attributes[0], attributes[1], attributes[2], attributes[3], attributes[4])  # Aquí asume que los valores están en la columna 1 y columna 2
-                    cursor.execute(insert_query, values)
+                values = (row[0], row[1], row[2], row[3], row[4])  # Aquí asume que los valores están en la columna 1 y columna 2
+                cursor.execute(insert_query, values)
 
         # Confirma los cambios en la base de datos
         connection.commit()
