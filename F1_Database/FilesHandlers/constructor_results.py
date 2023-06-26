@@ -14,7 +14,7 @@ def insertDataFrom_csv(csv_file):
         cursor = connection.cursor()
 
         # Leer el archivo CSV y obtener los datos
-        with open(csv_file, 'r') as file:
+        with open(csv_file, 'r', encoding='utf-8') as file:
             csv_data = csv.reader(file)
             next(csv_data)  # Omitir la primera fila si contiene encabezados
 
@@ -27,7 +27,8 @@ def insertDataFrom_csv(csv_file):
                 insert_query = "INSERT INTO constructor_results(constructorResultsId,raceId," \
                                    "constructorId,points,status) VALUES (%s, %s, %s, %s, %s)"
 
-                values = (row[0], row[1], row[2], row[3], row[4])  # Aquí asume que los valores están en la columna 1 y columna 2
+                values = (int(row[0]) if row[0] is not None else None, int(row[1]) if row[1] is not None else None, int(row[2]) if row[2] is not None else None,
+                          float(row[3]) if row[3] is not None else None, row[4])  # Aquí asume que los valores están en la columna 1 y columna 2
                 cursor.execute(insert_query, values)
 
         # Confirma los cambios en la base de datos

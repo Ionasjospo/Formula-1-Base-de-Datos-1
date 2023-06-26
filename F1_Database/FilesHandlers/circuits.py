@@ -14,7 +14,7 @@ def insertDataFrom_csv(csv_file):
         cursor = connection.cursor()
 
         # Leer el archivo CSV y obtener los datos
-        with open(csv_file, 'r') as file:
+        with open(csv_file, 'r', encoding='utf-8') as file:
             csv_data = csv.reader(file)
             next(csv_data)  # Omitir la primera fila si contiene encabezados
 
